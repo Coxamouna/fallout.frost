@@ -6,7 +6,7 @@ import colors
 FPS = 30
 WIDTH = 1024
 HEIGHT = 680
-IMAGE = "bg.png"
+IMAGE = "Images\\menu.png"
 NAME = "Fallout: Frost"
 
 TITLE01_NAME = "Fallout:"
