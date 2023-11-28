@@ -1,2 +1,6 @@
 # Color = ( R , G , B )
 IcyGrey = (212,212,212)
+NWinterPurple = (240, 158, 184)
+NWinterPink = (161, 108, 146)
+NWinterLBlue01 = (118, 153, 145)
+NWinterLBlue02 = (136, 166, 168)

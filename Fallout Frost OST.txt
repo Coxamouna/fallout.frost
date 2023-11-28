@@ -1,4 +1,0 @@
-A Horse with No Name - Starting Quest
-Baby Blue - Ending with altering the Past
-California Dreamin' - Failed MQ
-The Name Game - if player's name is Lana, this is the first song it will 			play out of their Pip-Boy, when they turn on the Radio
