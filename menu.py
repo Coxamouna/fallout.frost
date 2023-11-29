@@ -2,37 +2,40 @@ import pygame
 from pygame.locals import *
 import sys
 import colors
-import save
+import gamefiles as gf
 
-# Display Setup
+# Display Setup:
 FPS = 30
 WIDTH = 1024
 HEIGHT = 680
 IMAGE = "Images\\menu.png"
 NAME = "Fallout: Frost"
 
-# Game title Setup
+# Title Setup:
 TITLE01_NAME = "Fallout:"
 TITLE02_NAME = "Frost"
 TITLE01_SIZE = 60
 TITLE02_SIZE = 80
 TITLE_FONT = "Fonts\\Snowinter-Free-For-Personal-Use.otf"
 
-# Menu Setup
+# Menu Setup:
 TEXT_SIZE = 18
 TEXT_FONT = "Fonts\\jh_fallout-webfont.ttf"
 MENU_OPTIONS = ["New", "Load", "Credits", "Quit"]
 
+# Display menu options:
 def drawMenu():
     for index, option in enumerate(MENU_OPTIONS):
-        TEXT = MENU_FONT.render(option, True, colors.NWinterLBlue01 if index == SELECTED_OPTION else colors.NWinterLBlue02)
+        TEXT = MENU_FONT.render(option, True, colors.NWinterPink if index == SELECTED_OPTION else colors.NWinterLBlue02)
         TEXTBOX = TEXT.get_rect(center = (WIDTH - 70, HEIGHT // 2 - 90 + index * 50))
         SCREEN.blit(TEXT, TEXTBOX)
 
+# Terminate program:
 def terminate():
-    pygame.quit()   
+    pygame.quit()
     sys.exit()
 
+# Menu main function loop:
 def main():
     global FPSCLOCK, SCREEN, MENU_FONT, SELECTED_OPTION
     
@@ -54,7 +57,7 @@ def main():
     MENU_FONT = pygame.font.Font(TEXT_FONT, TEXT_SIZE)
     SELECTED_OPTION = 0
     
-    while True: # main game loop
+    while True: # logic loop
         for event in pygame.event.get():
             if event.type == KEYUP and event.key == K_ESCAPE:
                 terminate()
@@ -65,11 +68,27 @@ def main():
             elif event.type == KEYDOWN and event.key == K_RETURN:
                     # Perform action based on the selected option:
                     if SELECTED_OPTION == 0:
-                        save.createFile()
+                        gf.createSave()
                         print("Starting game...")
-                        # game.start()
+                        # game.new()
                     elif SELECTED_OPTION == 1:
-                        print("Continue the game...")
+                        if gf.saveFolderExists(gf.FOLDER):
+                            print(f"The folder {gf.FOLDER} exists.")
+                            saves = gf.saveFileExists(gf.FOLDER, gf.FORMAT)
+                            if saves:
+                                print(f"Save files found in {gf.FOLDER}:")
+                                for save in saves:
+                                    print(save)
+                                print("Loading a save file...")
+                                # game.load()
+                            else:
+                                print(f"No save files found in {gf.FOLDER}")
+                                gf.createSave()
+                                print("Starting game...")
+                                # game.new()
+                        else:
+                            print(f"The folder {gf.FOLDER} does not exist.")
+                            # Ask the user if they want to start a New game or go back to the menu
                     elif SELECTED_OPTION == 2:
                         print("Credits...")
                     elif SELECTED_OPTION == 3:
