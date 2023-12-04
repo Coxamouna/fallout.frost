@@ -40,6 +40,8 @@ class Game:
         self.screen.fill(color.NWinterPurple)
         
     def run(self):
+        icon = pygame.image.load('Images\\icon.png') 
+        pygame.display.set_icon(icon)
         pygame.display.set_caption(self.name)
         self.screen = pygame.display.set_mode((self.width, self.height), self.currentMode)
         while self.isRunning:

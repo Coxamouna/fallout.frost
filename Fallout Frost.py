@@ -23,7 +23,7 @@ TITLE_FONT = "Fonts\\Snowinter-Free-For-Personal-Use.otf"
 TEXT_SIZE = 18
 TEXT_FONT = "Fonts\\jh_fallout-webfont.ttf"
 
-def main():  
+def main():
     gameRuntime = game.Game(game.WIDTH, game.HEIGHT, NAME, game.FPS)
     gameRuntime.run()
 
