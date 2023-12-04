@@ -1,7 +1,6 @@
 import os
 import re
 from datetime import datetime
-from pathlib import Path
 
 FOLDER = "Saves"
 FORMAT = r"save_\d{8}__\d{6}\.txt"
@@ -31,4 +30,3 @@ def saveFolderExists(FOLDER): # Load
     return os.path.exists(FOLDER) and os.path.isdir(FOLDER)
     
 # def loadSave(): # Load
-    
