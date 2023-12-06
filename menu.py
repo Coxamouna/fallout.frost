@@ -2,8 +2,26 @@ import pygame
 from pygame.locals import *
 import sys
 import colors as color
-import saveload as sl
 import sys
+
+# Menu SETTINGS:
+WIDTH = 1024
+HEIGHT = 680
+FPS = 30
+BACKGROUND = "Images\\menu.png"
+MAIN_OPTIONS = ["Play", "Options", "Exit"]
+LOAD_OPTIONS = ["New", "Load", "Return"] # Return to the SAVES_OPTIONS
+    # SAVES_OPTIONS = ["save1", "save2", "save3"]
+PAUSE_OPTIONS = ["Resume", "Quit"]
+SETTINGS_OPTIONS = []
+CREDITS_OPTIONS = []
+
+# Title Setup:
+TITLE01_NAME = "Fallout:"
+TITLE02_NAME = "Frost"
+TITLE01_SIZE = 60
+TITLE02_SIZE = 80
+TITLE_FONT = "Fonts\\Snowinter-Free-For-Personal-Use.otf"
 
 class Menu:
     NAME = "Fallout : Frost"
@@ -41,7 +59,17 @@ class Menu:
 
 class Main(Menu):
     def __init__(self, width, height, fps):
-            super().__init__(width, height, fps, BACKGROUND, MENU_OPTIONS)
+            super().__init__(width, height, fps, BACKGROUND, MAIN_OPTIONS)
+    
+    def drawMenu(self, screen):
+        super().drawMenu(screen)
+        TITLE01_FONT = pygame.font.Font(TITLE_FONT, TITLE01_SIZE)
+        TITLE01 = TITLE01_FONT.render(TITLE01_NAME, True, color.IcyGrey)
+        screen.blit(TITLE01, (6, HEIGHT // 2 - 90))
+    
+        TITLE02_FONT = pygame.font.Font(TITLE_FONT, TITLE02_SIZE) # .Font for custom fonts
+        TITLE02 = TITLE02_FONT.render(TITLE02_NAME, True, color.IcyGrey)
+        screen.blit(TITLE02, (2, HEIGHT // 2 - 50))
     
     def handleInput(self, event):
         if event.type == KEYDOWN:
@@ -52,28 +80,9 @@ class Main(Menu):
             elif event.key == K_DOWN:
                 self.selection = (self.selection + 1) % len(self.options)
             elif event.key == K_RETURN:
-                if self.selection == 0: # Play
-                    if not sl.saveFolderExists(sl.FOLDER):
-                        print(f"The folder {sl.FOLDER} DOES NOT exist!")
-                        print(f"Creating {sl.FOLDER}/save__date__time.txt:")
-                        sl.createSave()
-                        print("Starting save file...")
-                        return 0 # Game State
-                    else: 
-                        print(f"The folder {sl.FOLDER} exists!")
-                        saves = sl.saveFileExists(sl.FOLDER, sl.FORMAT)
-                        if saves:
-                            print(f"Save files found in {sl.FOLDER}!")
-                            return 0 # 2 # Load State
-                            # for save in saves:
-                            #     print(save)
-                        else:
-                            print(f"The folder {sl.FOLDER} is empty.")
-                            print(f"Creating save__date__time.txt in {sl.FOLDER}:")
-                            sl.createSave()
-                            print("Starting save file...")
-                            return 0 # Game State
-                elif self.selection == 1: # Options/Credits:
+                if self.selection == 0: # Play - Game = 0
+                    return 0
+                elif self.selection == 1: # Options
                     print("Credits/Options...")
                     pass
                 elif self.selection == 3: # Exit
@@ -81,19 +90,30 @@ class Main(Menu):
                     self.terminate()       
         return 1
      
-# class Load(Menu):
-#     def __init__(self, width, height, fps, background, options):
-# class Options/Credits(Menu):
-#     def __init__(self, width, height, fps, background, options):
-# class Pause(Menu):
-#     def __init__(self, width, height, fps, background, options):
+class Load(Menu):
+    def __init__(self, width, height, fps):
+        super().__init__(width, height, fps, BACKGROUND, LOAD_OPTIONS)
+    
+    def handleInput(self, event):
+        pass
 
-# Menu SETTINGS:
-WIDTH = 1024
-HEIGHT = 680
-FPS = 30
-BACKGROUND = "Images\\menu.png"
-MENU_OPTIONS = ["Play", "Credits", "Exit"]
-SAVES_OPTIONS = ["save1", "save2", "save3"] # ????
-LOAD_OPTIONS = ["New", "Load", "Return"] # Return to the SAVES_OPTIONS
-PAUSE_OPTIONS = ["Resume", "Quit"]
+class Pause(Menu):
+    def __init__(self, width, height, fps):
+        super().__init__(width, height, fps, BACKGROUND, PAUSE_OPTIONS)
+     
+    def handleInput(self, event):
+        pass
+    
+class Settings(Menu):
+    def __init__(self, width, height, fps):
+        super().__init__(width, height, fps, BACKGROUND, SETTINGS_OPTIONS)
+     
+    def handleInput(self, event):
+        pass
+    
+class Credits(Menu):
+    def __init__(self, width, height, fps):
+        super().__init__(width, height, fps, BACKGROUND, CREDITS_OPTIONS)
+     
+    def handleInput(self, event):
+        pass 
